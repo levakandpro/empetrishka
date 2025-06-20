@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>empetrishka | ИИ Аудио Конвертор</title>
+  <meta name="description" content="Empetrishka — AI-сервис для аудио: конвертация, скачка, ИИ-звук. MP3, WAV, FLAC, AAC. Без рекламы. YouTube, TikTok, VK, Telegram. Один клик до результата.">
+  <meta name="keywords" content="аудио конвертер, mp3 онлайн, скачать mp3, flac, wav, tiktok mp3, youtube to mp3, нейросеть аудио, ai music tool, audio ai, mp3 из соцсетей, empetrishka">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Empetrishka Team">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Empetrishka — AI Audio Conversion in 1 Click">
+  <meta property="og:description" content="AI-инструмент для музыки и звука: MP3, YouTube, соцсети, нейросети. Быстро. Бесплатно. Без рекламы.">
+  <meta property="og:image" content="/static/icons/preview.png">
+  <meta property="og:url" content="https://empetrishka.app/convert">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Empetrishka — AI Audio Conversion in 1 Click">
+  <meta name="twitter:description" content="Звук. Конвертация. ИИ. YouTube — MP3 в один клик.">
+  <meta name="twitter:image" content="/static/icons/preview.png">
+
+  <!-- Мультиязычные версии -->
+  <link rel="alternate" hreflang="ru" href="https://empetrishka.app/convert" />
+  <link rel="alternate" hreflang="en" href="https://empetrishka.app/en/convert" />
+  <link rel="alternate" hreflang="fr" href="https://empetrishka.app/fr/convert" />
+  <link rel="alternate" hreflang="de" href="https://empetrishka.app/de/convert" />
+  <link rel="alternate" hreflang="ar" href="https://empetrishka.app/ar/convert" />
+  <link rel="alternate" hreflang="hi" href="https://empetrishka.app/hi/convert" />
+  <link rel="alternate" hreflang="zh" href="https://empetrishka.app/zh/convert" />
+  <link rel="canonical" href="https://empetrishka.app/convert" />
+<meta property="og:see_also" content="https://www.youtube.com/channel/UCD-q6AbUhJZvCrKjFWRvlzw" />
+
+  <!-- Иконка -->
+  <link rel="icon" href="/static/icons/logoconv.png" type="image/png">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="me" href="https://www.youtube.com/channel/UCD-q6AbUhJZvCrKjFWRvlzw">
+
+  <!-- Preload -->
+  <link rel="preload" as="style" href="/static/style.css?v=3" />
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <link rel="preload" as="script" href="/static/scripts/main.js" />
+  <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" />
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="/static/style.css?v=3" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Скрипты -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
+  <script src="/static/scripts/main.js" defer></script>
+</head>
+
+
+  <style>
+.choices.custom-select {
+  width: 260px !important;
+  font-family: 'Inter', sans-serif !important;
+  z-index: 10 !important;
+}
+
+.choices.custom-select .choices__inner {
+  background: linear-gradient(135deg, #ff00cc, #a200ff) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  padding: 14px 20px !important;
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: 0 0 22px rgba(255, 0, 204, 0.6) !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  min-height: auto !important;
+  transition: transform 0.2s ease !important;
+}
+
+.choices.custom-select .choices__inner:hover {
+  transform: scale(1.03) !important;
+}
+
+.choices.custom-select .choices__list--dropdown,
+.choices.custom-select .choices__list[aria-expanded] {
+  background: #0b0b0b !important;
+  border-radius: 14px !important;
+  margin-top: 8px !important;
+  box-shadow: 0 0 22px rgba(255, 0, 204, 0.4) !important;
+  padding: 6px 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+  max-height: 260px !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.choices.custom-select .choices__item--selectable {
+  padding: 12px 0 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.choices.custom-select .choices__item--selectable:hover {
+  background: #1a1a1a !important;
+  color: #ff00cc !important;
+}
+
+.choices.custom-select .choices__placeholder {
+  opacity: 1 !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+}
+
+.drop-zone {
+  border: 2px dashed #ff00cc;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  color: #eee;
+  padding: 24px;
+  text-align: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.drop-zone.drag-active {
+  background: rgba(255, 0, 204, 0.1);
+  border-color: #ff00cc;
+}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.popup-overlay.active {
+  display: flex;
+}
+.popup-content {
+  background: #fff;
+  color: #111;
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(255, 0, 204, 0.4);
+  position: relative;
+}
+.popup-content h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+.popup-content .close-popup {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+}
+.popup-content .close-popup:hover {
+  color: #000;
+}
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  background: #0b0b0b !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 22px rgba(255, 0, 204, 0.4) !important;
+  padding: 6px 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+  max-height: 260px !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.choices__item--selectable {
+  padding: 12px 0 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.choices__item--selectable:hover {
+  background: #1a1a1a !important;
+  color: #ff00cc !important;
+}
+.choices__list--dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #ff00cc transparent;
+}
+
+.choices__list--dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.choices__list--dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.choices__list--dropdown::-webkit-scrollbar-thumb {
+  background: #ff00cc;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.choices__list--dropdown::-webkit-scrollbar-thumb:hover {
+  background: #ff33dd;
+}
+
+
+.hidden-panel.active {
+  display: flex;
+}
+.format-panel {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px !important;         /* уменьшили расстояние между кнопками */
+  margin-top: 8px !important;   /* опустили ближе к форме */
+  padding: 6px 8px !important;  /* уменьшили внутренние отступы панели */
+}
+
+.format-panel.active {
+  display: flex;
+}
+/* Сделать между кнопками меньше пространства */
+.format-row {
+  display: flex;
+  gap: 8px;               /* было 12px */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+/* Уменьшить сами кнопки */
+.format-btn {
+  padding: 4px 10px !important; /* компактнее сами кнопки */
+  font-size: 0.75rem !important;
+}
+
+/* Опционально: уменьшить скроллбар */
+.format-row::-webkit-scrollbar {
+  height: 4px;
+}
+.format-row::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#loadingOverlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255,255,255,0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Обёртка контента внутри overlay */
+#loadingOverlay .overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Логотип */
+#loadingOverlay .loading-logo {
+  width: 500px;
+  margin-bottom: 16px;
+}
+
+/* Текст «Подождите, конвертируем...» */
+#loadingOverlay .loading-text {
+  margin-top: 16px;
+  font-size: 1rem;       /* чуть больше */
+  font-weight: 500;      /* чуть жирнее */
+  color: #ffffff;        /* белый, чтобы было видно */
+  opacity: 0.9;
+}
+/* контейнер должен быть позиционирован */
+.container {
+  position: relative;
+}
+
+/* кнопка «ПРОЧИТАЙ» в правом-нижнем углу */
+.read-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #f8f6f6;           /* ваш акцентный красный */
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;         /* тонкий шрифт */
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.read-btn:hover {
+  opacity: 1;
+}
+
+ /* === Обновлённая стилизация стеклянной модалки === */
+.features-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  z-index: 10000;
+  padding: 20px;
+}
+.features-modal.active {
+  display: flex;
+}
+
+/* Контейнер содержимого */
+.features-content {
+  position: relative;
+  background: rgba(255,255,255,0.75); /* «белое стекло» */
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 48px 32px;
+  max-width: 1100px;
+  width: 90%;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  color: #111;
+}
+
+/* Сетка 4 колонки */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* gap по вертикали и горизонтали — только сверху/снизу */
+  row-gap: 32px;
+  column-gap: 0;
+}
+
+/* Каждый элемент */
+.features-item {
+  padding: 0 24px;
+  text-align: center;
+  position: relative;
+}
+
+/* Вертикальный разделитель слева у каждого, кроме первого в строке */
+.features-item:not(:nth-child(4n+1)):before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: rgba(0,0,0,0.1);
+}
+
+/* Иконка и текст */
+.features-item img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+}
+.features-item p {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Кнопка «×» */
+.close-features {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.close-features:hover {
+  color: #000;
+}
+.format-hint {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  padding: 4px 12px;
+  margin-top: 12px;
+  background: rgba(70, 4, 77, 0.411);
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+.format-hint:hover {
+  background: rgba(0,0,0,0.3);
+}
+.yt-download-btn {
+  margin-left: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #ff0077, #a200ff);
+  padding: 8px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(255,0,204,0.3);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.yt-download-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+/* === Стили для пакетной конвертации === */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 16px;
+}
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.file-item span {
+  flex: 1;
+  margin-right: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-item progress {
+  width: 120px;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.file-item progress::-webkit-progress-bar {
+  background: #333;
+  border-radius: 4px;
+}
+.file-item progress::-webkit-progress-value {
+  background: #D70000; /* ваш красный акцент */
+  border-radius: 4px;
+}
+/* ==================================== */
+/* Кнопка удаления файла */
+.file-item .remove-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-right: 8px;
+  cursor: pointer;
+  line-height: 1;
+}
+.file-item .remove-btn:hover {
+  color: #D70000;
+}
+/* === Стили для предупреждения выбора файлов === */
+.file-error {
+  display: none;                /* по умолчанию скрыто */
+  color: #b71c1c;               /* тёмно-красный текст */
+  background: #ffebee;          /* светлый красный фон */
+  border: 1px solid #f44336;    /* ярко-красная рамка */
+  padding: 12px 16px;           /* внутренние отступы */
+  border-radius: 6px;           /* скруглённые углы */
+  font-size: 0.9rem;
+  margin: 12px auto 16px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.file-error::before {
+  content: '⚠️ ';              /* значок предупреждения */
+  margin-right: 4px;
+}
+/* ============================================ */
+/* Горизонтальная инфо-модалка */
+#infoModal .info-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  max-width: 1100px;
+  width: 95%;
+  padding: 40px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  align-items: center;
+}
+
+#infoModal .info-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#infoModal .info-image img {
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  opacity: 0.95;
+}
+
+#infoModal .info-text {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#infoModal .info-text h2 {
+  margin: 0 0 16px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #5210ec;
+}
+
+#infoModal .info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 0.95rem;
+  color: #222;
+  line-height: 1.55;
+}
+
+#infoModal .confidential-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 8px;
+  text-align: left;
+}
+
+#infoModal .close-info {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 28px;
+  color: #444;
+  cursor: pointer;
+}
+#infoModal .close-info:hover {
+  color: #000;
+}
+
+#infoModal .info-divider {
+  width: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 12px;
+  border-radius: 1px;
+}
+
+#infoModal .info-image {
+  
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#infoModal .info-video {
+  width: 360px;        /* ← тут меняешь ширину напрямую */
+  height: 600px;       /* ← тут меняешь высоту напрямую */
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+
+
+ </style>
+</head>
+<body>
+  <video autoplay muted loop id="bgVideo" playsinline>
+    <source src="/static/videos/bg1.mp4" type="video/mp4" />
+  </video>
+  <div id="darkenOverlay"></div>
+
+  <!-- Шапка -->
+  <header class="top-bar">
+    <a href="/" class="logo-link">
+      <img src="/static/icons/fillogo.png" alt="Logo" class="logo" />
+    </a>
+    <a href="http://127.0.0.1:5000/" class="yt-download-btn">YouTube → MP3</a>
+    <div id="downloadCount" style="margin-left: auto; font-size: 0.95rem; color: #444; display: flex; align-items: center; gap: 6px;">
+      <img src="/static/icons/download.svg" style="width: 20px; height: 20px; opacity: 0.7;" />
+      <span class="counter-text">НАКОНВЕРТИРОВАЛИ: 0</span>
+    </div>
+    
+  </header>
+
+  <main class="container" style="background: rgba(10, 10, 10, 0.322); border: 1px solid #f5f2f7c9; backdrop-filter: blur(10px); color: white;">
+      <img
+    id="infoBtn"
+    src="/static/icons/voprs.svg"
+    alt="Информация"
+    style="
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    "
+  />
+
+    <section class="intro" style="margin-top: 20px;">
+      <p style="text-align: center; font-size: 0.9rem; font-weight: 400; color: #d3c7ff; letter-spacing: 0.05em; margin-bottom: 4px; opacity: 0.9; text-shadow: 0 0 6px rgba(255, 0, 255, 0.25);">
+        Один клик до результата
+      </p>
+      <h1 class="clean-bold-title" style="color: white; font-size: 2.8rem; font-weight: 900; text-align: center; margin: 0; line-height: 1.1; text-shadow: 0 0 12px #a000ff;">
+        БЫСТРО - БЕСПЛАТНО
+      </h1>
+    </section>
+
+    <section class="form-section">
+<form
+  id="convertForm"
+  action="/convert-audio"
+  method="POST"
+  enctype="multipart/form-data"
+  style="display: flex; flex-direction: column; gap: 16px; align-items: center;"
+>
+
+<label for="fileInput" class="drop-zone" id="dropZone">
+  <span id="dropText">Перетащи файлы сюда или нажми для выбора</span>
+  <input
+    type="file"
+    name="audio"
+    id="fileInput"
+    accept="audio/*"
+    required
+    hidden
+    multiple
+  />
+</label>
+
+<!-- Контейнер для списка файлов и прогресса -->
+<div id="fileList" class="file-list">
+  <!-- Здесь JS покажет имена файлов и прогресс-бары -->
+</div>
+<div id="fileError" class="file-error" role="alert"></div>
+
+<div class="format-hint">
+  Конвертация и Скачивание запустится автоматически
+</div>
+
+
+
+
+  <input type="hidden" name="format" id="selectedFormat" required />
+
+<div id="formatPanel" class="format-panel">
+  <div class="format-row">
+    <button type="button" class="format-btn" data-format="mp3">MP3</button>
+    <button type="button" class="format-btn" data-format="wav">WAV</button>
+    <button type="button" class="format-btn" data-format="flac">FLAC</button>
+    <button type="button" class="format-btn" data-format="ogg">OGG</button>
+    <button type="button" class="format-btn" data-format="aac">AAC</button>
+    <button type="button" class="format-btn" data-format="m4a">M4A</button>
+    <button type="button" class="format-btn" data-format="opus">Opus</button>
+    <button type="button" class="format-btn" data-format="alac">ALAC</button>
+    <button type="button" class="format-btn" data-format="aiff">AIFF</button>
+  </div>
+</div>
+
+
+      </form>
+      <div id="status" aria-live="polite" style="text-align: center; margin-top: 16px;"></div>
+    </section>
+    <button class="read-btn">Прочитай</button>
+  </main>
+
+  <!-- Подвал -->
+  <footer class="footer-bar">
+    <p class="footer-text">
+      © 2025 empetrishka · 
+      <a href="#" class="footer-link" data-popup="policy">Политика</a> · 
+      <a href="#" class="footer-link" data-popup="terms">Условия</a> · 
+      <a href="#" class="footer-link" data-popup="contacts">Контакты</a>
+    </p>
+  </footer>
+
+  <!-- POPUPS -->
+  <div class="popup-overlay" id="popup-policy">
+    <div class="popup-content">
+      <span class="close-popup">×</span>
+      <h2>Политика конфиденциальности</h2>
+      <p>Мы уважаем вашу конфиденциальность. Этот сервис не собирает, не отслеживает и не хранит никакие персональные данные пользователей. Все действия выполняются локально.</p>
+    </div>
+  </div>
+  <div class="popup-overlay" id="popup-terms">
+    <div class="popup-content">
+      <span class="close-popup">×</span>
+      <h2>Условия использования</h2>
+      <p>Сервис предоставляется «как есть». Пользователь несёт ответственность за соблюдение авторских прав.</p>
+    </div>
+  </div>
+  <div class="popup-overlay" id="popup-contacts">
+    <div class="popup-content">
+      <span class="close-popup">×</span>
+      <h2>Контакты</h2>
+      <p>
+        📧 <a href="mailto:levakandproduction@gmail.com">levakandproduction@gmail.com</a><br />
+        💬 <a href="https://t.me/levakand_pro" target="_blank">@levakand_pro</a>
+      </p>
+    </div>
+  </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // — ПРОЧИТАЙ открывает infoModal
+let readBtn   = document.querySelector('.read-btn');
+let infoModal = document.getElementById('infoModal');
+let closeInfo = document.querySelector('.close-info');
+
+readBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  infoModal.classList.add('active');
+});
+closeInfo.addEventListener('click', () =>
+  infoModal.classList.remove('active')
+);
+infoModal.addEventListener('click', e => {
+  if (!e.target.closest('.info-wrapper')) {
+    infoModal.classList.remove('active');
+  }
+});
+
+// — Вопросик (?) открывает featuresModal
+let infoBtn       = document.getElementById('infoBtn');
+let featuresModal = document.getElementById('featuresModal');
+let closeFeatures = document.getElementById('closeFeatures');
+
+infoBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  featuresModal.classList.add('active');
+});
+closeFeatures.addEventListener('click', () =>
+  featuresModal.classList.remove('active')
+);
+featuresModal.addEventListener('click', e => {
+  if (!e.target.closest('.features-content')) {
+    featuresModal.classList.remove('active');
+  }
+});
+
+  // --- Popups ---
+  function openPopup(id) {
+    document.querySelectorAll('.popup-overlay').forEach(p => p.classList.remove('active'));
+    const popup = document.getElementById('popup-' + id);
+    if (popup) popup.classList.add('active');
+  }
+  document.querySelectorAll('.footer-link[data-popup]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      openPopup(link.dataset.popup);
+    });
+  });
+  document.querySelectorAll('.close-popup').forEach(btn =>
+    btn.addEventListener('click', () => btn.closest('.popup-overlay').classList.remove('active'))
+  );
+  document.querySelectorAll('.popup-overlay').forEach(popup =>
+    popup.addEventListener('click', e => {
+      if (!e.target.closest('.popup-content')) popup.classList.remove('active');
+    })
+  );
+
+  // --- Elements ---
+  const convertForm    = document.getElementById('convertForm');
+  const panel          = document.getElementById('formatPanel');
+  const hiddenInput    = document.getElementById('selectedFormat');
+  const fileInput      = document.getElementById('fileInput');
+  const dropZone       = document.getElementById('dropZone');
+  const dropText       = document.getElementById('dropText');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+// ——— Контейнер списка файлов + функция обновления ———
+const fileList = document.getElementById('fileList');
+const fileError = document.getElementById('fileError');
+function updateFileList() {
+  fileList.innerHTML = '';
+  const filesArray = Array.from(fileInput.files);
+  filesArray.forEach((file, index) => {
+    const fileItem = document.createElement('div');
+    fileItem.className = 'file-item';
+
+    // Кнопка удаления
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-btn';
+    removeBtn.textContent = '×';
+    removeBtn.dataset.index = index;
+
+    const fileName = document.createElement('span');
+    fileName.textContent = file.name;
+
+    const progress = document.createElement('progress');
+    progress.value = 0;
+    progress.max   = 100;
+
+    fileItem.append(removeBtn, fileName, progress);
+    fileList.append(fileItem);
+  });
+}
+// ——— Удаление файла из списка перед конвертацией ———
+fileList.addEventListener('click', e => {
+  if (!e.target.classList.contains('remove-btn')) return;
+  const idx = parseInt(e.target.dataset.index, 10);
+  const dt  = new DataTransfer();
+  Array.from(fileInput.files).forEach((file, i) => {
+    if (i !== idx) dt.items.add(file);
+  });
+  fileInput.files = dt.files;
+  updateFileList();
+});
+// ————————————————————————————————————————————
+  // --- Show format panel on file select or drop ---
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) panel.classList.add('active');
+  });
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('drag-active');
+  });
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-active');
+  });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-active');
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      dropText.textContent = fileInput.files[0].name;
+      panel.classList.add('active');
+    }
+  });
+const hint = document.querySelector('.format-hint');
+
+// При выборе файла через диалог
+fileInput.addEventListener('change', () => {
+  const count = fileInput.files.length;
+  if (count > 6) {
+    fileError.textContent = `Максимум можно выбрать 6 файлов (выбрано ${count})`;
+    fileError.style.display = 'block';
+    fileList.innerHTML = '';
+    panel.classList.remove('active');
+    return;
+  }
+  fileError.style.display = 'none';
+  panel.classList.add('active');
+  updateFileList();
+  hint.textContent = 'ВЫБЕРИТЕ ФОРМАТ';
+});
+
+
+
+// При дропе на зону
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-active');
+  const files = Array.from(e.dataTransfer.files);
+  if (files.length > 6) {
+    fileError.textContent = `Максимум можно выбрать 6 файлов (выбрано ${files.length})`;
+    fileError.style.display = 'block';
+    fileList.innerHTML = '';
+    panel.classList.remove('active');
+    return;
+  }
+  fileError.style.display = 'none';
+  fileInput.files = e.dataTransfer.files;
+  dropText.textContent = fileInput.files[0].name;
+  panel.classList.add('active');
+  updateFileList();
+  hint.textContent = 'ВЫБЕРИТЕ ФОРМАТ';
+});
+
+  // --- Format click: POST + download + spinner + reset ---
+// --- Обработка клика по форматам с прогресс-барами и сбросом ---
+panel.addEventListener('click', e => {
+  if (!e.target.classList.contains('format-btn')) return;
+  e.preventDefault();
+
+  const format = e.target.dataset.format;
+  panel.classList.remove('active');
+
+  const files = Array.from(fileInput.files);
+  let completed = 0;
+  const total     = files.length;
+
+  files.forEach((file, index) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', convertForm.action);
+
+    const fd = new FormData();
+    fd.append('audio', file);
+    fd.append('format', format);
+
+    const progress = fileList.children[index].querySelector('progress');
+
+    xhr.upload.addEventListener('progress', evt => {
+      if (evt.lengthComputable) {
+        progress.value = Math.round((evt.loaded / evt.total) * 100);
+      }
+    });
+
+    xhr.responseType = 'blob';
+
+    xhr.addEventListener('loadstart', () => loadingOverlay.classList.add('active'));
+    xhr.addEventListener('loadend',   () => loadingOverlay.classList.remove('active'));
+
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        const url = URL.createObjectURL(xhr.response);
+        const a   = document.createElement('a');
+        const base = file.name.replace(/\.[^/.]+$/, '');
+        a.href     = url;
+        a.download = `empetrishka_${base}.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } else {
+        alert(`Ошибка конвертации ${file.name}: ${xhr.statusText}`);
+      }
+
+      // Увеличиваем счётчик и при завершении всех — сбрасываем форму
+      completed++;
+      if (completed === total) {
+        convertForm.reset();
+        fileList.innerHTML = '';
+        dropText.textContent = 'Перетащи файлы сюда или нажми для выбора';
+        hint.textContent    = 'Конвертация и Скачивание запустится автоматически';
+      }
+    });
+
+    xhr.send(fd);
+  });
+});
+// -------------------------------------------------------------
+
+  // --- Prevent default page-level drag/drop ---
+  ['dragover','drop'].forEach(evt =>
+    document.addEventListener(evt, e => e.preventDefault())
+  );
+});
+document.addEventListener('DOMContentLoaded', () => {
+  // --- Popups (policy/terms/contacts) ---
+
+  // --- Info-modal («?») ---
+  const infoBtn   = document.getElementById('infoBtn');
+  const infoModal = document.getElementById('infoModal');
+  const closeInfo = document.querySelector('.close-info');
+
+
+
+  // …ваша остальная логика конвертера и др. слушатели…
+});  // конец первого DOMContentLoaded
+
+
+
+</script>
+<!-- Loading Overlay -->
+<div id="loadingOverlay">
+  <div class="overlay-content">
+    <img src="/static/icons/fillogodow.png" alt="Logo" class="loading-logo" />
+    <div class="spinner"></div>
+    <p class="loading-text">Подождите, конвертируем...</p>
+  </div>
+  
+</div>
+<div class="features-modal" id="featuresModal">
+  <div class="features-content">
+    <span class="close-features" id="closeFeatures">×</span>
+    <div class="features-grid">
+      <div class="features-item">
+        <img src="/static/emg/100.svg" alt="100% Онлайн" />
+        <p>100% Онлайн - без установки и ожиданий</p>
+      </div>
+      <div class="features-item">
+        <img src="/static/emg/pc.svg" alt="Супермощный движок" />
+        <p>Супермощный движок - Конвертация за секунды</p>
+      </div>
+      <div class="features-item">
+        <img src="/static/emg/diamond.svg" alt="Кристально чистый звук" />
+        <p>Кристально чистый звук - Без потерь</p>
+      </div>
+      <div class="features-item">
+        <img src="/static/emg/format.svg" alt="Все форматы мира" />
+        <p>Все форматы мира - От MP3 до FLAC и не только</p>
+      </div>
+      <div class="features-item">
+        <img src="/static/emg/cond.svg" alt="Конфиденциальность" />
+        <p>Конфиденциальность на уровне банковских стандартов</p>
+      </div>
+      <div class="features-item">
+        <img src="/static/emg/interf.svg" alt="Интуитивный интерфейс" />
+        <p>Интуитивный интерфейс - Один клик до результата</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="popup-overlay" id="infoModal">
+<div class="info-wrapper">
+  <span class="close-popup close-info">×</span>
+  <div class="info-image">
+    <video autoplay muted loop playsinline class="info-video">
+  <source src="/static/videos/inf.mp4" type="video/mp4" />
+</video>
+  </div>
+  <div class="info-divider"></div>
+  <div class="info-text">
+    <h2>КАК ПОЛЬЗОВАТЬСЯ?</h2>
+    <div class="info-body">
+      <p><strong>Один клик до результата.</strong> Добавляйте до <strong>6 аудиофайлов одновременно</strong> и мгновенно конвертируйте их в любой из самых популярных мировых форматов: MP3, WAV, FLAC, AAC, M4A, OGG, AIFF, Opus и другие.</p>
+
+      <p>Есть два способа загрузки файлов:<br/>
+        — <strong>Нажмите</strong> на зону «Перетащи файлы...» и выберите их вручную.<br/>
+        — Или просто <strong>перетащите файлы мышью</strong> прямо в окно.
+      </p>
+
+      <p>После выбора файлов появится выбор качества — Высокое, Среднее, Низкое или Ручной битрейт. Далее — выберите нужный формат. <strong>Всё остальное произойдёт автоматически</strong>: загрузка, конвертация и скачивание без ожиданий и кликов.</p>
+
+      <p>Также вы можете <strong>дважды кликнуть</strong> по странице — и попадёте на дополнительный инструмент, где можно <strong>скачивать MP3 из любого источника</strong>: YouTube, TikTok, VK, OK, Facebook и другие соцсети — без рекламы и сторонних сервисов.</p>
+
+      <p><strong>Советуем нажать кнопку «ПРОЧИТАЙ»</strong> в правом нижнем углу — она откроет расширенное описание всех функций, преимуществ и возможностей платформы.</p>
+
+      <p class="confidential-note">Файлы не сохраняются. Ваша конфиденциальность защищена на уровне мировых стандартов. Всё работает прямо в браузере — без установки и регистрации.</p>
+    </div>
+  </div>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Empetrishka",
+  "url": "https://empetrishka.app/convert",
+  "description": "AI аудио конвертер и загрузчик — MP3, FLAC, WAV, YouTube, TikTok. Один клик до результата.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "screenshot": "https://empetrishka.app/static/icons/preview.png",
+  "browserRequirements": "Requires JavaScript. Works in all modern browsers.",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "5821"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Empetrishka Team"
+  },
+  "sameAs": [
+    "https://www.youtube.com/channel/UCD-q6AbUhJZvCrKjFWRvlzw",
+    "https://t.me/levakand_pro",
+    "mailto:levakandproduction@gmail.com"
+  ]
+}
+</script>
+
+
+</body>
+</html>
