@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify, render_template, after_this_request, Response
+from flask import Flask, request, send_file, jsonify, render_template, Response
 from pydub import AudioSegment
 from threading import Semaphore
 import yt_dlp
@@ -53,6 +53,8 @@ def index():
 @app.route('/download', methods=['POST'])
 @limiter.limit("10 per minute")
 def download_audio():
+    from flask import after_this_request  # ✅ локальный импорт
+
     url = request.form.get('url')
     if not url or not url.startswith('http'):
         return jsonify({'error': '❗ Неверная ссылка'}), 400
@@ -119,6 +121,8 @@ def download_audio():
 @app.route('/convert-audio', methods=['POST'])
 @limiter.limit("15 per minute")
 def convert_audio():
+    from flask import after_this_request  # ✅ локальный импорт
+
     file = request.files.get('audio')
     target_format = request.form.get('format', 'mp3')
     quality = request.form.get('quality', 'medium')
