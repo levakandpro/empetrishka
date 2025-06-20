@@ -1,5 +1,5 @@
 flask
 gunicorn
-pydub
+pydub==0.25.1
 yt-dlp
 flask-limiter
