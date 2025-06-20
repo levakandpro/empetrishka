@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <link rel="preload" as="image" href="/static/icons/l-192.png" />
+<link rel="preload" as="style" href="/static/style.css" />
+<link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" />
+
+  <!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/icons/l.png" />
+
+<!-- iPhone / Android иконка -->
+<link rel="apple-touch-icon" href="/static/icons/l.png" sizes="180x180" />
+
+<!-- Manifest -->
+<link rel="manifest" href="/static/manifest.json" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- Open Graph для соцсетей -->
+<meta property="og:title" content="empetrishka — скачать MP3 с YouTube, TikTok, VK" />
+<meta property="og:description" content="Без рекламы и ограничений. Просто вставь ссылку и скачай чистый MP3." />
+<meta property="og:image" content="https://empetrishka.tk/static/icons/cover.jpg" />
+<meta property="og:url" content="https://empetrishka.tk" />
+<meta property="og:type" content="website" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="empetrishka — MP3 конвертер" />
+<meta name="twitter:description" content="Скачивай музыку с YouTube, TikTok, Instagram, VK. Быстро, бесплатно." />
+<meta name="twitter:image" content="https://empetrishka.tk/static/icons/cover.jpg" />
+
+  <meta name="description" content="Скачивай MP3 с YouTube, TikTok, VK — быстро и бесплатно. Без рекламы, без ограничений, в 1 клик.">
+<meta name="keywords" content="скачать mp3, YouTube, TikTok, VK, конвертер, музыка, empetrishka">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://empetrishka.tk" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/static/mobile.css" media="(max-width: 600px)" />
+
+  <title>empetrichka – СКАЧАТЬ МР3 с Ютуба</title>
+  <link rel="icon" type="image/png" href="/static/icons/l.png" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "empetrishka",
+  "url": "https://empetrishka.tk/",
+  "description": "Скачивай MP3 с YouTube, TikTok, VK — быстро и бесплатно без рекламы.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://empetrishka.tk/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+</head>
+<body>
+<video autoplay muted loop id="bgVideo" playsinline>
+  <!-- для мобилки ≤600px -->
+  <source media="(max-width:600px)" src="/static/videos/mobbg.mp4" type="video/mp4" />
+  <!-- для всех остальных -->
+  <source src="/static/videos/bg.mp4" type="video/mp4" />
+</video>
+
+  <div id="darkenOverlay"></div>
+
+<header class="top-bar">
+  <a href="https://www.youtube.com/@natopchane" target="_blank" class="logo-link">
+    <img src="/static/icons/logo.png" alt="Logo" class="logo" />
+  </a>
+<div id="downloadCount" style="margin-left: auto; font-size: 0.95rem; color: #444; display: flex; align-items: center; gap: 6px;">
+  <img src="/static/icons/download.svg" style="width: 20px; height: 20px; opacity: 0.7;" />
+  <span class="counter-text">Скачиваний: 0</span>
+</div>
+</header>
+  <!-- Модалка преимуществ -->
+<div id="featuresModal" class="features-modal">
+  <div class="features-content">
+    <span class="close-features">&times;</span>
+    <h2>Почему именно Empetrishka?</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <img src="/static/icons/speed.svg" alt="Скорость">
+        <h3>Мгновенная загрузка</h3>
+        <p>Скачивай аудио за секунды без регистрации и задержек.</p>
+      </div>
+      <div class="feature-item">
+        <img src="/static/icons/free.svg" alt="Бесплатно">
+        <h3>Всегда бесплатно</h3>
+        <p>Без рекламы, подписок и ограничений — только чистый MP3.</p>
+      </div>
+      <div class="feature-item">
+        <img src="/static/icons/lock.svg" alt="Безопасность">
+        <h3>Безопасность</h3>
+        <p>Данные не сохраняются, всё работает локально на твоём устройстве.</p>
+      </div>
+      <div class="feature-item">
+        <img src="/static/icons/limit.svg" alt="Без лимитов">
+        <h3>Без лимитов</h3>
+        <p>Сколько хочешь, когда хочешь. Сервис работает 24/7.</p>
+      </div>
+      <div class="feature-item">
+        <img src="/static/icons/playlist.png" alt="Плейлисты">
+        <h3>Поддержка плейлистов</h3>
+        <p>Скачивай целые YouTube-плейлисты — до 100 видео одним кликом.</p>
+      </div>
+      <div class="feature-item">
+        <img src="/static/icons/square.png" alt="Устройства">
+        <h3>Совместимость</h3>
+        <p>Работает на всех устройствах: ПК, смартфон, планшет.</p>
+      </div>
+    </div>
+  </div>
+</div>
+  <main class="container">
+    <div id="progressBar"></div>
+
+    <section class="intro">
+      <p class="intro-small">
+        Скачивай MP3 с YouTube, TikTok, Instagram, Facebook, ВКонтакте, Одноклассников и других платформ
+      </p>
+      <h1>БЫСТРО БЕСПЛАТНО</h1>
+      <h1 class="visually-hidden">Скачать MP3 с YouTube, TikTok, VK — быстро и бесплатно</h1>
+
+      <div class="icons-row" aria-label="Платформы">
+        <img src="/static/icons/youtube.svg" alt="YouTube" />
+        <img src="/static/icons/tiktok.svg" alt="TikTok" />
+        <img src="/static/icons/vk.svg" alt="VK" />
+        <img src="/static/icons/ok.svg" alt="OK" />
+        <img src="/static/icons/instagram.svg" alt="Instagram" />
+        <img src="/static/icons/facebook.svg" alt="Facebook" />
+        <img src="/static/icons/internet.svg" alt="Интернет" />
+      </div>
+    </section>
+
+    <section class="form-section">
+      <form id="downloadForm" autocomplete="off">
+        <input
+          type="url"
+          name="url"
+          id="urlInput"
+          placeholder="Вставь ссылку сюда..."
+          required
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="off"
+        />
+        <button type="submit" id="submitBtn">
+          <div class="loader-wrapper">
+            <span class="btn-text">Скачать MP3</span>
+            <div class="loader" style="display: none;"></div>
+          </div>
+        </button>
+      </form>
+      <div id="status" aria-live="polite"></div>
+    </section>
+    <div class="read-more-wrapper">
+  <button id="readMoreBtn">ПРОЧИТАЙ</button>
+</div>
+
+  </main>
+
+<footer class="footer-bar">
+  <p class="footer-text">
+    © 2025 empetrishka · 
+    <a href="#" class="footer-link" data-popup="policy">Политика</a> · 
+    <a href="#" class="footer-link" data-popup="terms">Условия</a> · 
+    <a href="#" class="footer-link" data-popup="contacts">Контакты</a>
+  </p>
+</footer>
+
+
+
+  <!-- Попапы policy/terms/contacts -->
+  <div id="popup-policy" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <h2>Политика конфиденциальности</h2>
+      <p>Мы уважаем вашу конфиденциальность. Этот сервис не собирает, не отслеживает и не хранит никакие персональные данные пользователей. Все действия, включая загрузку файлов, выполняются локально на устройстве.</p>
+    </div>
+  </div>
+
+  <div id="popup-terms" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <h2>Условия использования</h2>
+      <p>Сервис предоставляется «как есть» исключительно в образовательных и личных целях. Пользователь несёт ответственность за соблюдение авторских прав.</p>
+    </div>
+  </div>
+
+  <div id="popup-contacts" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <h2>Контакты</h2>
+      <p>
+        📧 <a href="mailto:levakandproduction@gmail.com">levakandproduction@gmail.com</a><br />
+        💬 <a href="https://t.me/levakand_pro" target="_blank">@levakand_pro</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="scrollHint">⤵ ИИ СКОРО</div>
+  <div id="scrollProgress">0%</div>
+
+  <!-- СКРИПТЫ -->
+  <script>
+    const form = document.getElementById('downloadForm');
+    const status = document.getElementById('status');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.querySelector('.btn-text').textContent = 'Загрузка...';
+      submitBtn.querySelector('.loader').style.display = 'inline-block';
+
+      const url = form.url.value.trim();
+      const bar = document.getElementById('progressBar');
+bar.style.width = '0%';
+setTimeout(() => {
+  bar.style.width = '70%';
+}, 100);
+
+      try {
+        const response = await fetch('/download', {
+          
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ url }),
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Ошибка при скачивании');
+        }
+        const blob = await response.blob();
+        const filename = response.headers.get('content-disposition')?.match(/filename="(.+)"/)?.[1] || 'audio.mp3';
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        const counterEl = document.querySelector('#downloadCount .counter-text');
+
+if (counterEl) {
+  counterEl.classList.add('bump');
+  setTimeout(() => counterEl.classList.remove('bump'), 400);
+}
+
+        link.remove();
+status.textContent = 'Готово! Файл скачан.';
+status.style.display = 'block';
+setTimeout(() => {
+  status.style.display = 'none';
+  status.textContent = '';
+}, 4000);
+
+      } catch (err) {
+        status.textContent = 'Ошибка: ' + err.message;
+      } finally {
+        if (bar) {
+  bar.style.width = '100%';
+  setTimeout(() => {
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetHeight;
+    bar.style.transition = 'width 0.4s ease';
+  }, 600);
+}
+
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.btn-text').textContent = 'Скачать MP3';
+        submitBtn.querySelector('.loader').style.display = 'none';
+      }
+    });
+
+    // popup logic
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.footer-link').forEach(link => {
+        const type = link.dataset.popup;
+        const popup = document.getElementById('popup-' + type);
+        link.addEventListener('click', (e) => { e.preventDefault(); popup.classList.add('active'); });
+      });
+      document.querySelectorAll('.close-popup').forEach(btn =>
+        btn.addEventListener('click', () => btn.closest('.popup-overlay').classList.remove('active'))
+      );
+      document.querySelectorAll('.popup-overlay').forEach(popup =>
+        popup.addEventListener('click', (e) => {
+          if (!e.target.closest('.popup-content')) popup.classList.remove('active');
+        })
+      );
+    });
+
+    // scroll hint/progress
+    window.addEventListener('scroll', () => {
+      const scrollHint = document.getElementById('scrollHint');
+      const scrollProgress = document.getElementById('scrollProgress');
+      if (scrollHint && !scrollHint.classList.contains('hide')) {
+        scrollHint.classList.add('hide');
+        scrollProgress.style.display = 'block';
+      }
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const percent = Math.min(Math.round((scrollTop / docHeight) * 100), 100);
+      scrollProgress.textContent = percent + '%';
+      const bgVideo = document.getElementById('bgVideo');
+      bgVideo && (bgVideo.style.filter = `brightness(${Math.max(1 - scrollTop / 300, 0.6).toFixed(2)})`);
+      document.getElementById('darkenOverlay').style.background = `rgba(0,0,0,${Math.min(scrollTop/300,0.6).toFixed(2)})`;
+    });
+
+    // drag-drop input
+    const input = document.getElementById('urlInput');
+    window.addEventListener('dragover', e => e.preventDefault());
+    window.addEventListener('drop', e => e.preventDefault());
+    input.addEventListener('dragover', e => { e.preventDefault(); input.classList.add('drag-over'); });
+    input.addEventListener('dragleave', () => input.classList.remove('drag-over'));
+    input.addEventListener('drop', e => {
+      e.preventDefault();
+      input.classList.remove('drag-over');
+      const txt = e.dataTransfer.getData('text/plain');
+      if (txt?.startsWith('http')) input.value = txt.trim();
+      else alert('Перетащи корректную ссылку');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.icons-row img').forEach(icon => {
+        icon.addEventListener('click', () => {
+          input.classList.add('flash-border');
+          input.focus();
+          setTimeout(() => input.classList.remove('flash-border'), 600);
+        });
+      });
+    });
+async function updateDownloadCount() {
+  try {
+    const res = await fetch('/stats');
+    const text = await res.text();
+    document.getElementById('downloadCount').textContent = '· ' + text;
+  } catch (err) {
+    console.error('Ошибка получения счётчика:', err);
+  }
+}
+
+updateDownloadCount();
+
+    // читаем преимущества
+    const readBtn = document.getElementById('readMoreBtn');
+    const modal = document.getElementById('featuresModal');
+    const closeBtn = document.querySelector('.close-features');
+    readBtn.addEventListener('click', e => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    function updateDownloadCount() {
+  fetch('/download-count')
+    .then(res => res.text())
+    .then(count => {
+      const el = document.querySelector('#downloadCount .counter-text');
+      if (el) el.textContent = `Скачиваний: ${count}`;
+    });
+}
+setInterval(updateDownloadCount, 5000);
+updateDownloadCount();
+
+  </script>
+ <style>
+  /* Центрируем .container на мобилке любой ценой */
+  @media only screen and (max-width: 600px) {
+    .container {
+      position: relative !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      margin: 0 !important;
+      width: calc(100% - 32px) !important;
+      max-width: 360px !important;
+      padding: 20px !important;
+    }
+  }
+</style>
+ <script>
+  if (window.matchMedia('(max-width: 600px)').matches) {
+    const trigger = document.getElementById('footer-trigger');
+    const menu    = document.getElementById('footer-links');
+    trigger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  }
+</script>
+<script>
+  document.querySelectorAll('.footer-link[data-popup]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('popup-' + btn.dataset.popup).classList.add('active');
+    });
+  });
+</script>
+<style>
+@media only screen and (max-width: 600px) {
+  /* Супер-override только здесь, перед </body> */
+  footer.footer-bar .footer-text {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    text-align: center !important;
+    font-size: 0.5rem !important;
+    padding: 2px 4px !important;
+    line-height: 1 !important;
+  }
+  footer.footer-bar .footer-text a {
+    display: inline-block !important;
+    margin: 0 2px !important;
+    padding: 0 !important;
+  }
+}
+</style>
+<style>
+  @media only screen and (max-width: 600px) {
+    .intro h1 {
+      text-shadow: none !important;
+    }
+  }
+</style>
+<style>
+  @media only screen and (max-width: 600px) {
+    /* Подгоняем ширину/высоту модалок для мобилки */
+    .popup-overlay .popup-content,
+    .features-modal .features-content {
+      width: 90vw !important;
+      max-width: 320px !important;
+      padding: 16px !important;
+      max-height: 80vh !important;
+      overflow-y: auto !important;
+      border-radius: 12px !important;
+    }
+    /* Уменьшаем заголовки и текст внутри */
+    .popup-overlay .popup-content h2,
+    .features-modal .features-content h2 {
+      font-size: 1.1rem !important;
+    }
+    .popup-overlay .popup-content p,
+    .features-modal .features-content p {
+      font-size: 0.9rem !important;
+      line-height: 1.4 !important;
+    }
+    /* Кнопки закрытия */
+    .popup-content .close-popup,
+    .features-content .close-features {
+      top: 8px !important;
+      right: 8px !important;
+      font-size: 1.2rem !important;
+    }
+  }
+</style>
+<style>
+  @media only screen and (max-width: 600px) {
+    .read-more-wrapper {
+      /* убираем снизу и ставим в угол сверху */
+      top: 20px !important;
+      right: 20px !important;
+      bottom: auto !important;
+    }
+  }
+</style>
+<style>
+  @media only screen and (max-width: 600px) {
+    /* Подгоняем ширину/высоту модалок для мобилки */
+    .popup-overlay .popup-content,
+    .features-modal .features-content {
+      width: 90vw !important;
+      max-width: 320px !important;
+      padding: 16px !important;
+      max-height: 80vh !important;
+      overflow-y: auto !important;
+      border-radius: 12px !important;
+    }
+    /* Уменьшаем заголовки и текст внутри */
+    .popup-overlay .popup-content h2,
+    .features-modal .features-content h2 {
+      font-size: 1.1rem !important;
+    }
+    .popup-overlay .popup-content p,
+    .features-modal .features-content p {
+      font-size: 0.9rem !important;
+      line-height: 1.4 !important;
+    }
+    /* Кнопки закрытия */
+    .popup-content .close-popup,
+    .features-content .close-features {
+      top: 8px !important;
+      right: 8px !important;
+      font-size: 1.2rem !important;
+    }
+  }
+</style>
+<style>
+  /* Унификация иконок под заголовком «БЫСТРО БЕСПЛАТНО» */
+  .icons-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .icons-row img {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain !important;
+  }
+  @media only screen and (max-width: 400px) {
+    .icons-row img {
+      width: 32px !important;
+      height: 32px !important;
+    }
+  }
+</style>
+<style>
+  .icons-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 4px !important;              /* минимальный зазор */
+  }
+  .icons-row img {
+    width: 32px !important;           /* жёсткая ширина */
+    height: 32px !important;          /* жёсткая высота */
+    max-width: 32px !important;
+    max-height: 32px !important;
+    padding: 0 !important;            /* убираем внутренние отступы */
+    margin: 0 !important;             /* убираем внешние отступы */
+    flex: 0 0 auto !important;        /* не сжиматься и не растягиваться */
+    object-fit: contain !important;   /* сохраняем пропорции */
+  }
+</style>
+<style>
+  .counter-text {
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+  }
+</style>
+<script>
+document.addEventListener('deviceready', () => {
+  const form = document.getElementById('downloadForm');
+  const input = document.getElementById('urlInput');
+  const status = document.getElementById('status');
+  const bar = document.getElementById('progressBar');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const url = input.value.trim();
+    if (!url.startsWith('http')) {
+      status.textContent = '❗ Введите корректную ссылку';
+      return;
+    }
+
+    status.textContent = '';
+    bar.style.width = '0%';
+    setTimeout(() => { bar.style.width = '70%'; }, 100);
+
+    // 📱 Простое скачивание через внешний браузер
+    if (window.cordova) {
+      const serverUrl = 'http://192.168.1.31:5000/download?url=' + encodeURIComponent(url);
+      window.open(serverUrl, '_system');
+      status.textContent = '⏬ Начато скачивание...';
+      bar.style.width = '100%';
+      setTimeout(() => {
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        bar.offsetHeight;
+        bar.style.transition = 'width 0.4s ease';
+      }, 600);
+      return;
+    }
+  });
+}, false);
+</script>
+
+</body>
+</html>
