@@ -1,5 +1,4 @@
 from flask import Flask, request, send_file, jsonify, render_template, Response
-from pydub import AudioSegment
 from threading import Semaphore
 import yt_dlp
 import os
@@ -10,6 +9,24 @@ import traceback
 from urllib.parse import urlparse
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+
+def generate_sitemap():
+    sitemap_path = os.path.join(app.static_folder, 'sitemap.xml')
+    sitemap_content = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://empetrishka.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://empetrishka.app/convert</loc>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+'''
+    os.makedirs(os.path.dirname(sitemap_path), exist_ok=True)
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
+        f.write(sitemap_content)
 
 app = Flask(__name__)
 limiter = Limiter(get_remote_address, app=app)
@@ -53,7 +70,7 @@ def index():
 @app.route('/download', methods=['POST'])
 @limiter.limit("10 per minute")
 def download_audio():
-    from flask import after_this_request  # ✅ локальный импорт
+    from flask import after_this_request
 
     url = request.form.get('url')
     if not url or not url.startswith('http'):
@@ -118,61 +135,6 @@ def download_audio():
         download_limit.release()
         return jsonify({'error': f'❌ Ошибка: {str(e)}'}), 500
 
-@app.route('/convert-audio', methods=['POST'])
-@limiter.limit("15 per minute")
-def convert_audio():
-    from flask import after_this_request  # ✅ локальный импорт
-
-    file = request.files.get('audio')
-    target_format = request.form.get('format', 'mp3')
-    quality = request.form.get('quality', 'medium')
-    bitrate_manual = request.form.get('bitrate')
-
-    if not file or not allowed_file(file.filename):
-        return "Недопустимый или отсутствующий файл", 400
-
-    filename = uuid.uuid4().hex
-    input_path = os.path.join(DOWNLOAD_FOLDER, f"{filename}_in")
-    output_path = os.path.join(DOWNLOAD_FOLDER, f"{filename}_out.{target_format}")
-
-    file.save(input_path)
-
-    try:
-        audio = AudioSegment.from_file(input_path)
-
-        if quality == 'manual' and bitrate_manual:
-            bitrate = f"{bitrate_manual}k"
-        elif quality == 'high':
-            bitrate = "320k"
-        elif quality == 'low':
-            bitrate = "128k"
-        else:
-            bitrate = "192k"
-
-        audio.export(output_path, format=target_format, bitrate=bitrate)
-        os.remove(input_path)
-
-        @after_this_request
-        def remove_file(response):
-            try:
-                os.remove(output_path)
-            except:
-                pass
-            return response
-
-        return send_file(
-            output_path,
-            as_attachment=True,
-            download_name=f"converted.{target_format}",
-            mimetype=f"audio/{target_format}"
-        )
-    except Exception as e:
-        error_text = traceback.format_exc()
-        with open(ERROR_LOG_FILE, "a") as log:
-            log.write(error_text)
-        log_error_to_email(error_text)
-        return f"Ошибка конвертации: {str(e)}", 500
-
 @app.route('/convert')
 def convert_page():
     return render_template('convert.html')
@@ -231,6 +193,7 @@ def cleanup_old_files():
         time.sleep(300)
 
 threading.Thread(target=cleanup_old_files, daemon=True).start()
+generate_sitemap()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
