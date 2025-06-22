@@ -671,7 +671,7 @@
   <span id="dropText">Перетащи файлы сюда или нажми для выбора</span>
   <input
     type="file"
-    name="audio"
+    name="file"
     id="fileInput"
     accept="audio/*"
     required
@@ -936,7 +936,7 @@ panel.addEventListener('click', e => {
     xhr.open('POST', convertForm.action);
 
     const fd = new FormData();
-    fd.append('audio', file);
+    fd.append('file', file);
     fd.append('format', format);
 
     const progress = fileList.children[index].querySelector('progress');
@@ -1104,6 +1104,14 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 }
 </script>
+<script>
+  document.addEventListener('dblclick', () => {
+    window.location.href = '/';
+  });
+</script>
+
+
+
 
 
 </body>

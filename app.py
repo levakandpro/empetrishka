@@ -194,6 +194,80 @@ def cleanup_old_files():
 
 threading.Thread(target=cleanup_old_files, daemon=True).start()
 generate_sitemap()
+@app.route('/convert-audio', methods=['POST'])
+def convert_audio():
+    import tempfile
+    import subprocess
+    from werkzeug.utils import secure_filename
+    from flask import send_file
+
+    file = request.files.get('file')
+    target_format = request.form.get('format', '').lower()
+
+    if not file or not target_format:
+        return jsonify({'error': 'Файл или формат не указан'}), 400
+
+    if target_format not in ALLOWED_EXTENSIONS:
+        return jsonify({'error': 'Недопустимый формат'}), 400
+
+    try:
+        original_filename = secure_filename(file.filename)
+        input_path = os.path.join(tempfile.gettempdir(), original_filename)
+        file.save(input_path)
+
+        base = os.path.splitext(original_filename)[0]
+        output_filename = f"empetrishka_{base}.{target_format}"
+        output_path = os.path.join(tempfile.gettempdir(), output_filename)
+
+        command = [
+            'ffmpeg', '-y', '-i', input_path, output_path
+        ]
+        subprocess.run(command, check=True)
+
+        return send_file(output_path, as_attachment=True)
+
+    except Exception as e:
+        print(f"Ошибка при конвертации: {e}")
+        return jsonify({'error': 'Ошибка конвертации'}), 500
+
+        # Сохраняем временный оригинальный файл
+        original_filename = secure_filename(file.filename)
+        original_path = os.path.join(DOWNLOAD_FOLDER, f"{uuid.uuid4().hex}_{original_filename}")
+        file.save(original_path)
+
+        # Путь для конвертированного файла
+        output_filename = f"converted_{uuid.uuid4().hex}.{target_format}"
+        output_path = os.path.join(DOWNLOAD_FOLDER, output_filename)
+
+        # Команда FFmpeg
+        cmd = [
+            "ffmpeg", "-y", "-i", original_path,
+            output_path
+        ]
+
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        if not os.path.exists(output_path):
+            raise Exception("Конвертация не удалась")
+
+        # Очистка оригинала после отправки
+        @after_this_request
+        def remove_files(response):
+            try:
+                os.remove(original_path)
+                os.remove(output_path)
+            except:
+                pass
+            return response
+
+        return send_file(
+            output_path,
+            as_attachment=True,
+            download_name=output_filename
+        )
+
+    except Exception as e:
+        return jsonify({'error': f'Ошибка конвертации: {str(e)}'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
