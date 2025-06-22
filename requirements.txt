@@ -1,6 +1,5 @@
 flask
 gunicorn
-pydub==0.25.1 --no-deps
 yt-dlp
 flask-limiter
 ffmpeg
