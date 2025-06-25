@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify, render_template, Response
+from flask import Flask, request, jsonify, render_template, Response, make_response, after_this_request
 from threading import Semaphore
 import yt_dlp
 import os
@@ -9,24 +9,6 @@ import traceback
 from urllib.parse import urlparse
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-
-def generate_sitemap():
-    sitemap_path = os.path.join(app.static_folder, 'sitemap.xml')
-    sitemap_content = '''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://empetrishka.app/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://empetrishka.app/convert</loc>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-'''
-    os.makedirs(os.path.dirname(sitemap_path), exist_ok=True)
-    with open(sitemap_path, 'w', encoding='utf-8') as f:
-        f.write(sitemap_content)
 
 app = Flask(__name__)
 limiter = Limiter(get_remote_address, app=app)
@@ -40,7 +22,6 @@ COUNTER_FILE = 'counter.txt'
 LOG_FILE = 'log.txt'
 ERROR_LOG_FILE = 'errors.log'
 ALLOWED_EXTENSIONS = {'mp3', 'wav', 'flac', 'ogg', 'aac'}
-
 download_limit = Semaphore(3)
 
 def allowed_file(filename):
@@ -70,8 +51,6 @@ def index():
 @app.route('/download', methods=['POST'])
 @limiter.limit("10 per minute")
 def download_audio():
-    from flask import after_this_request
-
     url = request.form.get('url')
     if not url or not url.startswith('http'):
         return jsonify({'error': '❗ Неверная ссылка'}), 400
@@ -120,14 +99,15 @@ def download_audio():
             download_limit.release()
             return response
 
-        return send_file(
-            temp_filepath,
-            mimetype='audio/mpeg',
-            as_attachment=True,
-            download_name=final_filename
-        )
-        response.headers["Content-Disposition"] = f'attachment; filename=\"{final_filename}\"'
+        with open(temp_filepath, 'rb') as f:
+            data = f.read()
+
+        response = make_response(data)
+        response.headers.set('Content-Type', 'application/octet-stream')
+        response.headers.set('Content-Disposition', f'attachment; filename="{final_filename}"')
+        response.headers.set('Content-Length', str(os.path.getsize(temp_filepath)))
         return response
+
     except Exception as e:
         error_text = traceback.format_exc()
         with open(ERROR_LOG_FILE, "a") as log:
@@ -159,7 +139,23 @@ def robots_txt():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    return send_file("static/sitemap.xml")
+    sitemap_path = os.path.join(app.static_folder, 'sitemap.xml')
+    sitemap_content = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://empetrishka.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://empetrishka.app/convert</loc>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+'''
+    os.makedirs(os.path.dirname(sitemap_path), exist_ok=True)
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
+        f.write(sitemap_content)
+    return send_file(sitemap_path)
 
 @app.route('/logs')
 def view_logs():
@@ -194,81 +190,6 @@ def cleanup_old_files():
         time.sleep(300)
 
 threading.Thread(target=cleanup_old_files, daemon=True).start()
-generate_sitemap()
-@app.route('/convert-audio', methods=['POST'])
-def convert_audio():
-    import tempfile
-    import subprocess
-    from werkzeug.utils import secure_filename
-    from flask import send_file
-
-    file = request.files.get('file')
-    target_format = request.form.get('format', '').lower()
-
-    if not file or not target_format:
-        return jsonify({'error': 'Файл или формат не указан'}), 400
-
-    if target_format not in ALLOWED_EXTENSIONS:
-        return jsonify({'error': 'Недопустимый формат'}), 400
-
-    try:
-        original_filename = secure_filename(file.filename)
-        input_path = os.path.join(tempfile.gettempdir(), original_filename)
-        file.save(input_path)
-
-        base = os.path.splitext(original_filename)[0]
-        output_filename = f"empetrishka_{base}.{target_format}"
-        output_path = os.path.join(tempfile.gettempdir(), output_filename)
-
-        command = [
-            'ffmpeg', '-y', '-i', input_path, output_path
-        ]
-        subprocess.run(command, check=True)
-
-        return send_file(output_path, as_attachment=True)
-
-    except Exception as e:
-        print(f"Ошибка при конвертации: {e}")
-        return jsonify({'error': 'Ошибка конвертации'}), 500
-
-        # Сохраняем временный оригинальный файл
-        original_filename = secure_filename(file.filename)
-        original_path = os.path.join(DOWNLOAD_FOLDER, f"{uuid.uuid4().hex}_{original_filename}")
-        file.save(original_path)
-
-        # Путь для конвертированного файла
-        output_filename = f"converted_{uuid.uuid4().hex}.{target_format}"
-        output_path = os.path.join(DOWNLOAD_FOLDER, output_filename)
-
-        # Команда FFmpeg
-        cmd = [
-            "ffmpeg", "-y", "-i", original_path,
-            output_path
-        ]
-
-        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
-        if not os.path.exists(output_path):
-            raise Exception("Конвертация не удалась")
-
-        # Очистка оригинала после отправки
-        @after_this_request
-        def remove_files(response):
-            try:
-                os.remove(original_path)
-                os.remove(output_path)
-            except:
-                pass
-            return response
-
-        return send_file(
-            output_path,
-            as_attachment=True,
-            download_name=output_filename
-        )
-
-    except Exception as e:
-        return jsonify({'error': f'Ошибка конвертации: {str(e)}'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
