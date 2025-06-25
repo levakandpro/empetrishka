@@ -126,7 +126,8 @@ def download_audio():
             as_attachment=True,
             download_name=final_filename
         )
-
+        response.headers["Content-Disposition"] = f'attachment; filename=\"{final_filename}\"'
+        return response
     except Exception as e:
         error_text = traceback.format_exc()
         with open(ERROR_LOG_FILE, "a") as log:
