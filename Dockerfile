@@ -1,9 +1,22 @@
 FROM python:3.10-slim
 
-RUN apt-get update && apt-get install -y ffmpeg gcc && apt-get clean
+# Установка зависимостей для yt_dlp + ffmpeg
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    gcc \
+    curl \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+ && apt-get clean
+
+# Установка последней версии yt_dlp отдельно
+RUN pip install --no-cache-dir yt-dlp
 
 WORKDIR /app
-COPY requirements.txt .
+
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .

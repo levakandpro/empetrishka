@@ -1,6 +1,11 @@
 from flask import Flask, request, send_file, jsonify, render_template, after_this_request
 from threading import Semaphore
 import yt_dlp
+yt_dlp.utils.std_headers["User-Agent"] = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+)
+
 import os
 import uuid
 import time
